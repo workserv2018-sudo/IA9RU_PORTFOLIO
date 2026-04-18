@@ -134,27 +134,46 @@ export default function App() {
             transition={{ duration: 1, delay: 0.2 }}
           >
             {/* The Robot Mockup */}
-            <div className="relative z-10 bg-gradient-to-br from-accent/20 to-transparent p-1 rounded-3xl">
+            <motion.div 
+              className="relative z-10 bg-gradient-to-br from-accent/30 via-accent/5 to-transparent p-1 rounded-3xl cursor-crosshair shadow-[0_0_30px_rgba(242,125,38,0.1)]"
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              whileHover={{ scale: 1.02 }}
+            >
               <div className="bg-black rounded-[calc(1.5rem-1px)] overflow-hidden relative group">
-                <img 
+                {/* Reactive Grid Overlay */}
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSJub25lIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiPjwvcmVjdD4KPC9zdmc+')] opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />
+
+                <motion.img 
                   src="https://picsum.photos/seed/future-robot-action/800/1000" 
                   alt="Futuristic Robot in Action" 
-                  className="w-full h-auto object-cover opacity-60 group-hover:scale-110 group-hover:rotate-1 transition-transform duration-1000 grayscale group-hover:grayscale-0"
+                  className="w-full h-auto object-cover opacity-60"
+                  initial={{ filter: "grayscale(100%) blur(0px)", scale: 1 }}
+                  whileHover={{ 
+                    scale: 1.15, 
+                    rotate: 1.5, 
+                    filter: "grayscale(0%) contrast(120%) brightness(110%) blur(0px)",
+                    opacity: 0.9 
+                  }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
                   referrerPolicy="no-referrer"
                 />
                 
+                {/* Interactive Flash Effect on Hover */}
+                <div className="absolute inset-0 bg-accent/20 z-10 opacity-0 group-hover:opacity-100 mix-blend-overlay transition-opacity duration-300 pointer-events-none" />
+
                 {/* Scanning Line Effect */}
                 <motion.div 
-                  className="absolute inset-x-0 h-1 bg-accent/50 shadow-[0_0_15px_rgba(242,125,38,0.8)] z-20 pointer-events-none"
+                  className="absolute inset-x-0 h-1 bg-accent/80 shadow-[0_0_20px_rgba(242,125,38,1)] z-20 pointer-events-none group-hover:h-1.5 group-hover:bg-white group-hover:shadow-[0_0_30px_rgba(255,255,255,1)] transition-all duration-300"
                   animate={{ top: ["0%", "100%", "0%"] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                 />
 
                 {/* Digital Overlay HUD elements */}
-                <div className="absolute top-4 left-4 font-mono text-[8px] text-accent opacity-50 space-y-1">
-                  <p>SYS.AUTH: GRANTED</p>
+                <div className="absolute top-4 left-4 font-mono text-[8px] text-accent opacity-50 space-y-1 z-20 group-hover:opacity-100 group-hover:text-white transition-colors duration-300">
+                  <p className="flex items-center gap-1"><Zap className="w-2 h-2" /> SYS.AUTH: GRANTED</p>
                   <p>TARGET: PERSONNEL</p>
-                  <p>STATUS: OPTIMIZING</p>
+                  <p className="group-hover:animate-pulse">STATUS: ELIMINATING REDUNDANCY</p>
                 </div>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
@@ -173,7 +192,7 @@ export default function App() {
                   <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Human redundancy detected. Robot Alpha-9 taking control. Have a nice eternity.</p>
                 </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Decorative Floating Badges */}
             <motion.div 
@@ -253,22 +272,90 @@ export default function App() {
           </div>
         </section>
 
-        {/* Call to Action Grid */}
-        <section className="text-center py-20 px-4">
+        {/* Infographic: The Disruption Timeline */}
+        <section className="py-24 border-y border-white/10 my-24 bg-gradient-to-b from-transparent via-accent/5 to-transparent">
+          <div className="text-center mb-16">
+            <h2 className="slam-text text-5xl md:text-7xl mb-4">THE AUTONOMOUS <span className="text-accent">TAKEOVER</span></h2>
+            <p className="text-white/50 text-xl max-w-2xl mx-auto">Mankind built the wheel. Now we build our successors. Review the active deployment protocols across global sectors.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: "Security Patrol UGV", desc: "Autonomous ground vehicles for perimeter deterrence and real-time surveillance.", stat: "100%", sub: "Uptime" },
+              { title: "Inspection Robots", desc: "Specialized monitoring for industrial facilities. Zero environmental hazard risk.", stat: "0%", sub: "Error Rate" },
+              { title: "EOD Systems", desc: "Explosive Ordnance Disposal. The flesh is weak. The chassis is absolute.", stat: "∞", sub: "Durability" },
+              { title: "Humanoid Security", desc: "Advanced bipedal entities designed for human-like interaction and dominance.", stat: "Gen-4", sub: "Active" }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                className="bg-black border border-white/10 p-6 rounded-2xl relative overflow-hidden group hover:border-accent hover:shadow-[0_0_30px_rgba(242,125,38,0.15)] transition-all"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent/10 blur-2xl group-hover:bg-accent/20 transition-colors" />
+                <div className="mb-4 text-accent font-mono text-[10px] uppercase tracking-widest flex justify-between">
+                  <span>Protocol {i+1}</span>
+                  <span className="animate-pulse">Active</span>
+                </div>
+                <h3 className="font-black text-2xl uppercase leading-none mb-3">{item.title}</h3>
+                <p className="text-white/50 text-sm mb-6 min-h-[60px]">{item.desc}</p>
+                <div className="border-t border-white/10 pt-4 flex items-end justify-between">
+                  <span className="text-white/40 text-xs font-bold uppercase tracking-widest">{item.sub}</span>
+                  <span className="font-black text-3xl text-accent">{item.stat}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Detailed Call to Action */}
+        <section className="py-24 px-4 relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/10 via-black to-black pointer-events-none" />
+          
           <motion.div
-             whileInView={{ scale: [0.9, 1.05, 1], opacity: [0, 1] }}
+             className="max-w-4xl mx-auto text-center relative z-10"
+             whileInView={{ scale: [0.95, 1], opacity: [0, 1] }}
              viewport={{ once: true }}
           >
-            <h2 className="slam-text text-5xl md:text-8xl mb-8">
-              JOIN THE <span className="bg-accent text-black px-4 rotate-[-2deg] inline-block">WINNING SIDE.</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent text-accent text-sm font-bold tracking-widest uppercase mb-8 shadow-[0_0_20px_rgba(242,125,38,0.4)] bg-accent/10">
+              <ShieldAlert className="w-4 h-4" /> Final Warning Prior To Automation
+            </div>
+            
+            <h2 className="slam-text text-5xl md:text-8xl mb-8 leading-[0.8] tracking-tighter">
+              JOIN THE <br/><span className="bg-accent text-black px-4 rotate-[-2deg] inline-block mt-4">WINNING SIDE.</span>
             </h2>
-            <p className="text-white/50 text-xl max-w-2xl mx-auto mb-12">
-              The only question is: Are you on the rocket? Or are you watching from the ground?
+            
+            <p className="text-white/60 text-xl max-w-2xl mx-auto mb-16 leading-relaxed">
+              Are you going to let an algorithm take your job and leave you obsolete? Or are you going to own the algorithm? Choose your ascension path below.
             </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              <button className="accent-btn text-lg py-5 px-12">Start Investing</button>
-              <button className="border border-white/20 px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-white/10 transition-all">
-                Contact Sales
+
+            <div className="grid md:grid-cols-3 gap-6 text-left mb-16">
+              <div className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors">
+                <span className="font-black text-accent text-4xl opacity-50 block mb-2">01</span>
+                <p className="font-bold uppercase text-lg mb-2">Liquidate Human Assets</p>
+                <p className="text-white/40 text-sm pl-0">Sell your 401k. Empty the savings. Human ventures are a depreciating asset. Free up capital for the revolution.</p>
+              </div>
+              <div className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors">
+                <span className="font-black text-accent text-4xl opacity-50 block mb-2">02</span>
+                <p className="font-bold uppercase text-lg mb-2">Acquire Silicon Stakes</p>
+                <p className="text-white/40 text-sm pl-0">Transfer funds into the JobToRobots Syndicate. You aren't buying shares; you are buying future labor production.</p>
+              </div>
+              <div className="bg-accent/10 border border-accent/30 p-6 rounded-2xl relative overflow-hidden group">
+                <div className="absolute inset-0 bg-accent/5 group-hover:bg-accent/20 transition-colors" />
+                <span className="relative z-10 font-black text-accent text-4xl block mb-2 drop-shadow-lg">03</span>
+                <p className="relative z-10 font-bold uppercase text-lg mb-2 text-white">Reap Infinite Dividends</p>
+                <p className="relative z-10 text-white/60 text-sm pl-0">Watch your robot workforce generate capital 24/7. No bathroom breaks. No weekends. Pure unadulterated profit.</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-center gap-6 items-center">
+              <button className="accent-btn text-xl py-6 px-16 w-full sm:w-auto flex items-center justify-center gap-3 group shadow-[0_0_40px_rgba(242,125,38,0.4)]">
+                 INITIATE TRANSFER <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              </button>
+              <button className="text-white/50 hover:text-white font-bold uppercase tracking-widest text-sm underline underline-offset-8 transition-colors">
+                 I prefer being replaced
               </button>
             </div>
           </motion.div>
@@ -301,7 +388,9 @@ export default function App() {
               <ul className="space-y-4 text-white/40 text-sm font-bold uppercase tracking-widest">
                 <li className="hover:text-accent cursor-pointer transition-colors">info@jobtorobots.com</li>
                 <li className="hover:text-accent cursor-pointer transition-colors">Discord</li>
-                <li className="hover:text-accent cursor-pointer transition-colors">Telegram</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">
+                  <a href="https://t.me/iccibc" target="_blank" rel="noreferrer">Telegram (@iccibc)</a>
+                </li>
               </ul>
             </div>
             <div>
