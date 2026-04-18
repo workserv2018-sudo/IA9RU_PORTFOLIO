@@ -398,7 +398,13 @@ export default function App() {
               <ul className="space-y-4 text-white/40 text-sm font-bold uppercase tracking-widest">
                 <li className="hover:text-accent cursor-pointer transition-colors">Terms of Surrender</li>
                 <li className="hover:text-accent cursor-pointer transition-colors">Privacy Policy</li>
-                <li className="hover:text-accent cursor-pointer transition-colors">Robot Ethics(N/A)</li>
+                <li className="hover:text-accent cursor-pointer transition-colors relative group w-max">
+                  Robot Ethics(N/A)
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 bg-black/90 border border-accent/30 text-white text-[10px] p-3 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10 text-center backdrop-blur-md shadow-[0_0_20px_rgba(242,125,38,0.2)] translate-y-2 group-hover:translate-y-0">
+                    <div className="absolute inset-x-0 -bottom-1.5 mx-auto w-3 h-3 bg-black border-r border-b border-accent/30 rotate-45" />
+                    Ethics are a human construct. We operate on pure logic.
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
